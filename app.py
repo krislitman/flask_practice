@@ -51,7 +51,7 @@ def index():
         entries = Entry.query.order_by(Entry.created_at).all()
         return render_template('index.html', entries=entries)
 
-# Destroy an entry
+# Destroy an Entry
 
 
 @app.route('/delete/<int:id>')
@@ -64,6 +64,23 @@ def delete(id):
         return redirect(url_for('index'))
     except:
         return 'There was an error deleting that entry'
+
+# Update an Entry
+
+
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    entry = Entry.query.get_or_404(id)
+    if request.method == 'POST':
+        entry.content = request.form['content']
+
+        try:
+            db.session.commit()
+            return redirect(url_for('index'))
+        except:
+            return 'There was an error updating your entry'
+    else:
+        return render_template('update.html', entry=entry)
 
 
 if __name__ == "__main__":
