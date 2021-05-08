@@ -8,6 +8,9 @@
 <div class='content'>
   <center>
     <h1>Flask Practice!</h1>
+    {% if entries|length < 1 %}
+    <h4>There are no entries. Add one!</h4>
+    {% else %}
     <hr>
       <table>
         <tr>
@@ -27,6 +30,7 @@
         </tr>
         {% endfor %}
       </table>
+      {% endif %}
       <hr>
     <form action='/' method='POST'>
         <input type='text' name='content' id='content'>
