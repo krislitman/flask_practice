@@ -1,8 +1,41 @@
 {% extends 'base.html' %}
 
 {% block head %}
+<title>Home</title>
 {% endblock %}
 
 {% block body %}
-<h1>Template</h1>
+<div class='content'>
+  <center>
+    <h1>Flask Practice!</h1>
+    {% if entries|length < 1 %}
+    <h4>There are no entries. Add one!</h4>
+    {% else %}
+    <hr>
+      <table>
+        <tr>
+          <th>Entry</th>
+          <th>Content</th>
+          <th>Added</th>
+        </tr>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry.content }}</td>
+            <td>{{ entry.created_at.date() }}</td>
+            <td>
+                <a href="/update/{{entry.id}}">Update</a>
+                <br>
+                <a href="/delete/{{entry.id}}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+      <hr>
+    <form action='/' method='POST'>
+        <input type='text' name='content' id='content'>
+        <input type='submit' value='Update Entry'>
+    </form>
+  </center>
+</div>
 {% endblock %}
