@@ -6,30 +6,32 @@
 
 {% block body %}
 <div class='content'>
+  <center>
     <h1>Flask Practice!</h1>
-
-    <table>
-      <tr>
-        <th>Entry</th>
-        <th>Content</th>
-        <th>Added</th>
-      </tr>
-      {% for entry in entries %}
-      <tr>
-          <td>{{ entry.content }}</td>
-          <td>{{ entry.created_at.date() }}</td>
-          <td>
-              <a href="">Update</a>
-              <br>
-              <a href="">Delete</a>
-          </td>
-      </tr>
-      {% endfor %}
-    </table>
-
+    <hr>
+      <table>
+        <tr>
+          <th>Entry</th>
+          <th>Content</th>
+          <th>Added</th>
+        </tr>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry.content }}</td>
+            <td>{{ entry.created_at.date() }}</td>
+            <td>
+                <a href="">Update</a>
+                <br>
+                <a href="/delete/{{entry.id}}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <hr>
     <form action='/' method='POST'>
         <input type='text' name='content' id='content'>
         <input type='submit' value='Add Entry'>
     </form>
+  </center>
 </div>
 {% endblock %}

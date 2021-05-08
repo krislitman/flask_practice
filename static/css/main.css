@@ -2,3 +2,16 @@ body {
   margin: 0;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+td {
+  text-align: center;
+  padding: 8px;
+}
+
+.form {
+  margin_top: 15px;
+}
+
+#content {
+  width: 60%;
+}

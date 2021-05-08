@@ -32,6 +32,8 @@ class Entry(db.Model):
     def __repr__(self):
         return '<Entry %r>' % self.id
 
+# Index for all entries & POST to create an Entry
+
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -48,6 +50,20 @@ def index():
     else:
         entries = Entry.query.order_by(Entry.created_at).all()
         return render_template('index.html', entries=entries)
+
+# Destroy an entry
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    entry_to_delete = Entry.query.get_or_404(id)
+
+    try:
+        db.session.delete(entry_to_delete)
+        db.session.commit()
+        return redirect(url_for('index'))
+    except:
+        return 'There was an error deleting that entry'
 
 
 if __name__ == "__main__":
