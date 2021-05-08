@@ -1,9 +1,13 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
+# Database and DB Initialization
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///flask_practice_development'
 db = SQLAlchemy(app)
+
+# User model definition
 
 
 class User(db.Model):
@@ -17,10 +21,24 @@ class User(db.Model):
     def __repr__(self):
         return '<E-mail %r>' % self.email
 
+# Entry model definition
 
-@app.route('/')
+
+class Entry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(200), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Entry %r>' % self.id
+
+
+@app.route('/', methods=['POST', 'GET'])
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        pass
+    else:
+        return render_template('index.html')
 
 
 if __name__ == "__main__":
