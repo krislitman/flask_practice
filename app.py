@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -36,9 +36,18 @@ class Entry(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        pass
+        entry_content = request.form['content']
+        new_entry = Entry(content=entry_content)
+        try:
+            db.session.add(new_entry)
+            db.session.commit()
+            return redirect(url_for('index'))
+        except:
+            return 'There was an error creating your entry'
+
     else:
-        return render_template('index.html')
+        entries = Entry.query.order_by(Entry.created_at).all()
+        return render_template('index.html', entries=entries)
 
 
 if __name__ == "__main__":
